@@ -21,6 +21,7 @@ def empty():
         print(1)
     else: 
         print(0)
+        
 def top():
     if(len(stack) == 0):
         print(-1)
@@ -30,8 +31,7 @@ def top():
 for i in range(n):
     stackorder = input().split()
     if(stackorder[0] == 'push'):
-        push(stackorder
-[1])
+        push(stackorder[1])
     if(stackorder[0] == 'pop'):
         pop()
     if(stackorder[0] == 'size'):
