@@ -18,3 +18,27 @@
 
 #1. 앞서 설명한 동적계획법을 적용했을 때 최소 비용이 계산되는 것을 보장하기 위해 먼저 최적의 원칙이 보장됨을 설명
 #2. 위 알고리즘을 동적계획법으로 구현하라.
+
+def mybag(W, weight, price, N):
+#W 무게 한도, weight 보석 무게, price 보석 가격, N 보석 갯수
+    #행은 보석의 총갯수를 의미하고 열은 무게를 의미하게 이중배열생성
+    double_array = [[0 for x in range(W + 1)] for x in range(N + 1)]
+    for n in range(N + 1):
+        for w in range(W + 1):
+            #일단 n이 0인 경우는 넣을 보석이 없는 것이므로 다 0이고,
+            #w가 0인 경우는 배낭이 없는 것이므로 다 0이다.
+            if n == 0 or w == 0:
+                double_array[n][w] = 0;
+            #최대를 넣을 수 있는 무게를 비교하여 최신화
+            elif weight[n - 1] <= w:
+                double_array[n][w] = max(price[n - 1] + double_array[n - 1][w - weight[n - 1]], double_array[n - 1][w])
+            else:
+                double_array[n][w] = double_array[n - 1][w]
+    return double_array[N][W]
+
+W = 20
+weight = [2, 3, 4, 5, 9]
+price = [3, 4, 8, 8, 10]
+N = 5
+
+print(mybag(W, weight, price, N))
