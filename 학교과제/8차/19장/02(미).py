@@ -18,3 +18,40 @@
 #(m+1) x (n+1) 모양의 2차원 행렬을 P라 할 때 P[i][j]가 다음 성질을 만족해야 한다.
 
 #첫째 문자열의 길이가 i, 둘째 문자열의 길이가 j일 때, 두 문자열의 편집 거리
+
+#풀이
+#이중리스트를 만들었다고 생각하자. 왼쪽에는 gorithm을 배치 오른쪽에는 ligator를 배치
+
+def edit_distance(str1, str2):
+    double_list = [[0 for x in range(len(str1) + 1)] for x in range(len(str2) + 1)]
+    
+    for i in range(1,len(str1) + 1):
+        double_list[0][i] = double_list[0][i-1]
+    
+    for j in range(1,len(str2) + 1):
+        double_list[j][0] = double_list[j-1][0]
+    
+    #같은거 확인
+    for i in range(1, len(str1) + 1):
+        for j in range(1,len(str2) + 1):
+            if str1[j - 1] == str2[i - 1]:
+                double_list[i][j] = double_list[i - 1][j - 1] + 5
+            break
+    
+    #삭제
+    for i in range(1, len(str1) + 1):
+        for j in range(1, len(str2) + 1):
+            if str1[j - 1] != str2[i - 1]:
+                double_list[i][j] = double_list[i - 1][j] + 20
+    print(double_list)
+               
+    #삽입
+    for i in range(1, len(str1) + 1):
+        for j in range(1, len(str2) + 1):
+            if str1[j - 1] != str2[i - 1]:
+                double_list[i][j] = double_list[i][j - 1] + 20
+    print(double_list)
+        
+    return double_list[-1][-1]
+    
+print(edit_distance("py", "pt"))
